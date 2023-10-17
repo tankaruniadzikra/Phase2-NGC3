@@ -1,0 +1,16 @@
+POST and PUT
+{
+    "Name": "Satanic",
+    "ItemCode": "ITM006",
+    "Stock": 9,
+    "Description": "Immense power at the cost of your soul.",
+    "Status": "broken"
+}
+
+{
+    "Name": "Mjollnir",
+    "ItemCode": "ITM006",
+    "Stock": 9,
+    "Description": "Thor's magical hammer, made for him by the dwarves Brok and Eitri.",
+    "Status": "active"
+}
