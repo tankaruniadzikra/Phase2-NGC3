@@ -63,7 +63,7 @@ func GetVillains(w http.ResponseWriter, r *http.Request, p httprouter.Params, db
 
 func GetCharacters(w http.ResponseWriter, r *http.Request, p httprouter.Params, db *sql.DB) {
 	// Query untuk mengambil data dari kedua tabel
-	rows, err := db.Query("SELECT *, 'hero' as type FROM Heroes UNION ALL SELECT *, 'villain' as type FROM Villains")
+	rows, err := db.Query("SELECT ID, Name, Universe, Skill, ImageURL FROM Heroes UNION ALL SELECT ID, Name, Universe, Skill, ImageURL FROM Villains")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,13 +72,13 @@ func GetCharacters(w http.ResponseWriter, r *http.Request, p httprouter.Params, 
 	var characters []entity.Character
 	for rows.Next() {
 		var id int
-		var name, universe, skill, imageURL, characterType string
+		var name, universe, skill, imageURL string
 		// Mendekode hasil query ke variabel
-		err := rows.Scan(&id, &name, &universe, &skill, &imageURL, &characterType)
+		err := rows.Scan(&id, &name, &universe, &skill, &imageURL)
 		if err != nil {
 			log.Fatal(err)
 		}
-		characters = append(characters, entity.Character{Name: name, Universe: universe, Skill: skill, ImageURL: imageURL, Type: characterType})
+		characters = append(characters, entity.Character{Name: name, Universe: universe, Skill: skill, ImageURL: imageURL})
 	}
 
 	w.Header().Set("Content-Type", "application/json")

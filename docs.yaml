@@ -1,0 +1,161 @@
+openapi: '3.0.2'
+info:
+  title: Avengers Inventories API NGC3
+  version: '1.0'
+  contact:
+    name: Tan Karunia Dzikra
+    email: tankaruniadzikra@gmail.com
+servers:
+  - url: http://localhost:8001
+    description: 'development servers'
+
+paths:
+  '/inventories':
+    get:
+      summary: 'Get all Inventories'
+      description: 'Displays all inventory data in the database'
+
+      parameters:
+        - name: "status"
+          required: false
+          description: 'Filter by inventory status'
+          in: 'query'
+        - name: "page"
+          required: false
+          description: 'Filter based on the selected page'
+          in: 'query'
+          schema:
+            type: 'number'
+      responses:
+        200:
+          description: 'successfully display inventory data'
+          content:
+            application/json:
+              schema:
+                type: 'array'
+                items:
+                  type: 'object'
+                  properties:
+                    Name:
+                      type: 'string'
+                      example: 'example inventory name'
+                    ItemCode:
+                      type: 'string'
+                      example: 'example inventory code'
+                    Stock:
+                      type: 'number'
+                      format: 'int32'
+                      example: 5
+                    Description:
+                      type: 'string'
+                      example: 'example inventory description'
+                    Status:
+                      type: 'string'
+                      example: 'example inventory status'
+        404:
+          description: 'page not found'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: '404 page not found'
+
+        500:
+          description: 'internal server error'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'internal server error'
+
+    post:
+      summary: 'Create new Inventories'
+      description: 'Add new inventory data to the database'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: 'object'
+              properties:
+                Name:
+                  type: 'string'
+                  example: 'example inventory name'
+                ItemCode:
+                  type: 'string'
+                  example: 'example inventory code'
+                Stock:
+                  type: 'number'
+                  format: 'int32'
+                  example: 5
+                Description:
+                  type: 'string'
+                  example: 'example inventory description'
+                Status:
+                  type: 'string'
+                  example: 'example inventory status'
+
+
+  '/inventories/id':
+    get:
+      summary: 'Get Inventory by ID'
+      description: 'Displays inventory data in the database by id'
+      parameters:
+        - name: "id"
+          required: true
+          description: 'ID that will be used in the endpoint'
+          in: path
+    put:
+      summary: 'Update new Inventory by ID'
+      description: 'Update new inventory data into the database by id'
+      parameters:
+        - name: "id"
+          required: true
+          description: 'ID that will be used in the endpoint'
+          in: path
+
+    delete:
+      summary: 'Delete Inventory by ID'
+      description: 'delete inventory data in the database by id'
+      parameters:
+        - name: "id"
+          required: true
+          description: 'ID that will be used in the endpoint'
+          in: path
+      responses:
+        200:
+          description: 'Successfully deleted inventory data'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Inventory deleted successfully'
+        404:
+          description: 'Inventory not found'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Inventory not found'
+        500:
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'internal server error'
